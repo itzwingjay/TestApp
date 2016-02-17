@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+example.controller('AppCtrl', function($scope, $ionicModal, $timeout, $cordovaSQLite) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -39,6 +39,26 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+
+  $scope.insert = function(firstname, lastname){
+    var query = "INSERT INTO  people (fristname, lastname) VALUES (?, ?)";
+    $cordovaSQLite.execute(db, query, [firstname, lastname]).then(function(result){
+      console.log("INSERT ID -> " + result.insertID);
+    }, function(error){
+      console.log(error);
+    })
+  }
+
+  $scope.select = function(lastname){
+    var query = "SELECT firstname, lastname FROM people WHERE lastname = ?";
+    $cordovaSQLite.execute(db, query, [lastname]).then(function(result){
+      if(result.rows.length > 0){
+        console.log("SELECTED ->" + result.rows.item(0).firstname + result.rows.item(0).lastname);
+      }
+    }, function(error){
+      console.log(error);
+    });
+  }
 })
 
 .controller('PlaylistsCtrl', function($scope) {
