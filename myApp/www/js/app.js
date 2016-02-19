@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var db = null;
+
 
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
@@ -23,7 +23,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-    db = $cordovaSQLite.openDB("my.db");
+   var db = $cordovaSQLite.openDB("my.db");
+
+
     $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS people (id integer primary key, firstname text, lastname text");
   });
 })
